@@ -18,6 +18,12 @@
 </head>
 <body>
 
+  <!-- ========== Background Music ========== -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="./MyLight.mp3" type="audio/mp3">
+  </audio>
+  <div id="music-btn" class="music-btn" onclick="toggleMusic()">🎵</div>
+
   <!-- ========== Flower Rain ========== -->
   <div id="flower-rain"></div>
 
@@ -170,6 +176,18 @@
   <!-- ========== Funding Section ========== -->
   <section class="funding" data-animate>
     <img class="flower-icon" src="./img/flower.png" alt="">
+
+    <!-- ========== Growth Video ========== -->
+    <h3>아인이의 1년간의 성장 영상</h3>
+    <p class="description">우리 아인이의 소중한 첫 1년을 담았습니다.</p>
+    <div class="video-container">
+      <video controls playsinline preload="metadata" poster="./img/ah-in intro_sub.jpg">
+        <source src="./ah-in_birthday.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div style="height: 40px;"></div>
+
     <h3>축하의 마음 전하는 방법</h3>
     <p class="description">
       참석이 어려우신 분들을 위해<br>

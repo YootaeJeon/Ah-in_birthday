@@ -188,6 +188,47 @@ function updateDday() {
   }
 }
 
+// ========== Background Music ==========
+var bgMusic = null;
+var musicBtn = null;
+var musicStarted = false;
+
+function initMusic() {
+  bgMusic = document.getElementById('bg-music');
+  musicBtn = document.getElementById('music-btn');
+
+  // 사용자 첫 터치/클릭 시 자동 재생 시도
+  function startMusic() {
+    if (musicStarted) return;
+    musicStarted = true;
+    bgMusic.volume = 0.4;
+    bgMusic.play().then(function() {
+      musicBtn.classList.add('playing');
+      musicBtn.classList.remove('paused');
+    }).catch(function() {
+      musicBtn.classList.add('paused');
+    });
+    document.removeEventListener('touchstart', startMusic);
+    document.removeEventListener('click', startMusic);
+  }
+
+  document.addEventListener('touchstart', startMusic, { once: true });
+  document.addEventListener('click', startMusic, { once: true });
+}
+
+function toggleMusic() {
+  if (!bgMusic) return;
+  if (bgMusic.paused) {
+    bgMusic.play();
+    musicBtn.classList.add('playing');
+    musicBtn.classList.remove('paused');
+  } else {
+    bgMusic.pause();
+    musicBtn.classList.remove('playing');
+    musicBtn.classList.add('paused');
+  }
+}
+
 // ========== Initialize ==========
 document.addEventListener('DOMContentLoaded', function() {
   createFlowerLeaves();
@@ -195,4 +236,5 @@ document.addEventListener('DOMContentLoaded', function() {
   initScrollAnimation();
   initKakaoMap();
   updateDday();
+  initMusic();
 });
