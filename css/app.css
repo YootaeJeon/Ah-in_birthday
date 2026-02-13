@@ -125,6 +125,12 @@ a {
   overflow: hidden;
 }
 
+@media (min-width: 461px) {
+  .intro-movie {
+    min-height: auto;
+  }
+}
+
 .intro-movie .image {
   width: 100%;
   text-align: center;
@@ -211,51 +217,89 @@ a {
   text-align: center;
 }
 
+.calendar-label {
+  font-size: 0.9em;
+  color: #b0a090;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.calendar-date-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.calendar-flower {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.calendar-flower.left {
+}
+
+.calendar-flower.right {
+}
+
 .calendar-section h3 {
-  font-size: 1.3em;
-  color: #295238;
+  font-size: 1.6em;
+  color: #444;
+  letter-spacing: 3px;
+  margin: 0;
+}
+
+.calendar-datetime {
+  font-size: 1.1em;
+  color: #888;
   margin-bottom: 25px;
+  letter-spacing: 1px;
 }
 
 .calendar-table {
   width: 100%;
   max-width: 320px;
   margin: 0 auto 20px;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 6px;
 }
 
 .calendar-table th {
-  padding: 8px 4px;
-  font-size: 0.95em;
-  color: #666;
+  padding: 10px 4px;
+  font-size: 0.9em;
+  color: #b0a090;
   font-weight: normal;
+  border-bottom: 1px solid #e8e0d8;
+  padding-bottom: 12px;
 }
 
 .calendar-table th:first-child {
-  color: #e74c3c;
+  color: #e0917a;
 }
 
 .calendar-table th:last-child {
-  color: #3498db;
+  color: #7ab0c4;
 }
 
 .calendar-table td {
-  padding: 8px 4px;
-  font-size: 1em;
-  color: #555;
+  padding: 10px 4px;
+  font-size: 0.95em;
+  color: #888;
   text-align: center;
 }
 
 .calendar-table td:first-child {
-  color: #e74c3c;
+  color: #e0917a;
 }
 
 .calendar-table td:last-child {
-  color: #3498db;
+  color: #7ab0c4;
 }
 
 .calendar-table td.today {
-  background-color: #295238;
+  background-color: #e8a990;
   color: #fff !important;
   border-radius: 50%;
   width: 36px;
@@ -269,16 +313,21 @@ a {
 }
 
 .calendar-dday {
-  margin-top: 15px;
-  font-size: 1.1em;
-  color: #295238;
+  margin-top: 20px;
+  font-size: 1.15em;
+  color: #555;
+  background: linear-gradient(135deg, #f8f0e3, #fdf6ec);
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: 1px solid #e8d5b8;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 
-.calendar-datetime {
-  font-size: 1.2em;
-  color: #333;
-  margin-bottom: 8px;
-  letter-spacing: 1px;
+.calendar-dday .dday-num {
+  color: #c0392b;
+  font-size: 1.3em;
+  font-weight: bold;
 }
 
 /* ========== Gallery (Celebrate) Section ========== */
@@ -309,7 +358,7 @@ a {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 20px 0;
+  padding: 50px 0;
 }
 
 .gallery-track {
@@ -330,7 +379,7 @@ a {
 
 .gallery-slide.active {
   opacity: 1;
-  transform: scale(1.15);
+  transform: scale(1.4);
   z-index: 2;
 }
 
@@ -409,17 +458,26 @@ a {
   text-align: center;
 }
 
-.map-section h3 {
-  font-size: 1.3em;
-  color: #295238;
-  margin-bottom: 5px;
+.map-label {
+  font-size: 0.9em;
+  color: #b0a090;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
 }
 
-.map-section .venue-name {
-  font-size: 1.15em;
-  color: #333;
-  margin-bottom: 5px;
-  font-weight: bold;
+.venue-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.venue-title {
+  font-size: 1.6em;
+  color: #444;
+  letter-spacing: 3px;
+  margin: 0;
 }
 
 .map-section .venue-address {
@@ -427,6 +485,17 @@ a {
   color: #777;
   margin-bottom: 20px;
   line-height: 1.6;
+}
+
+.phone-link {
+  color: #555;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.phone-icon {
+  vertical-align: -2px;
+  margin-right: 2px;
 }
 
 .map-container {
@@ -445,35 +514,26 @@ a {
 
 .map-buttons {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 15px;
+  justify-content: space-between;
+  margin: 20px 10% 0;
 }
 
 .map-btn {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  background: #fff;
-  font-family: 'Cafe24Oneprettynight', cursive;
-  font-size: 0.9em;
-  color: #333;
-  cursor: pointer;
+  text-align: center;
   text-decoration: none;
-  transition: background 0.2s;
-}
-
-.map-btn:active {
-  background: #f5f5f5;
+  color: #295238;
+  font-size: 0.85em;
+  padding-top: 10px;
+  cursor: pointer;
 }
 
 .map-btn img {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 6px;
 }
 
 /* ========== Transport Info ========== */
@@ -526,90 +586,109 @@ a {
   word-break: keep-all;
 }
 
-.funding-btn {
-  display: inline-block;
-  padding: 14px 40px;
+/* ========== Guestbook Section ========== */
+.guestbook {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.guestbook-notice {
+  font-size: 1em;
+  color: #b0a090;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.guestbook h3 {
+  font-size: 1.3em;
+  color: #295238;
+  margin-bottom: 10px;
+}
+
+.guestbook .description {
+  font-size: 0.95em;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 25px;
+  word-break: keep-all;
+}
+
+.guestbook-form {
+  width: 90%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.guestbook-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e0d8d0;
+  border-radius: 10px;
+  font-family: 'Cafe24Oneprettynight', cursive;
+  font-size: 1em;
+  color: #333;
+  background: #fdfbf8;
+  margin-bottom: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.guestbook-input:focus {
+  border-color: #c0b0a0;
+}
+
+.guestbook-textarea {
+  width: 100%;
+  height: 120px;
+  padding: 14px 16px;
+  border: 1px solid #e0d8d0;
+  border-radius: 10px;
+  font-family: 'Cafe24Oneprettynight', cursive;
+  font-size: 1em;
+  color: #333;
+  background: #fdfbf8;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+  line-height: 1.6;
+}
+
+.guestbook-textarea:focus {
+  border-color: #c0b0a0;
+}
+
+.guestbook-char {
+  text-align: right;
+  font-size: 0.8em;
+  color: #bbb;
+  margin: 4px 4px 14px;
+}
+
+.guestbook-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Cafe24Oneprettynight', cursive;
+  font-size: 1.05em;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: opacity 0.2s;
+}
+
+.guestbook-btn:first-of-type {
   background: #ffeb00;
   color: #3c1e1e;
-  border: none;
-  border-radius: 8px;
-  font-family: 'Cafe24Oneprettynight', cursive;
-  font-size: 1.1em;
-  cursor: pointer;
-  margin-bottom: 30px;
-  text-decoration: none;
 }
 
-.funding-btn:active {
-  opacity: 0.8;
-}
-
-.account-section {
-  margin-top: 15px;
-}
-
-.account-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
-  margin: 8px auto;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-family: 'Cafe24Oneprettynight', cursive;
-  font-size: 1em;
-  cursor: pointer;
-  width: 80%;
-  max-width: 300px;
-  color: #333;
-}
-
-.account-toggle:active {
-  background: #f9f9f9;
-}
-
-.account-detail {
-  padding: 12px 20px;
-  background: #faf8f5;
-  border-radius: 8px;
-  margin: 5px auto 10px;
-  width: 80%;
-  max-width: 300px;
-  display: none;
-}
-
-.account-detail.show {
-  display: block;
-}
-
-.account-detail .bank-name {
-  font-size: 0.9em;
-  color: #888;
-  margin-bottom: 4px;
-}
-
-.account-detail .account-number {
-  font-size: 1em;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.copy-btn {
-  display: inline-block;
-  padding: 6px 16px;
+.guestbook-btn.sms {
   background: #295238;
   color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-family: 'Cafe24Oneprettynight', cursive;
-  font-size: 0.85em;
-  cursor: pointer;
 }
 
-.copy-btn:active {
-  opacity: 0.7;
+.guestbook-btn:active {
+  opacity: 0.8;
 }
 
 /* ========== Button Component ========== */

@@ -105,27 +105,45 @@ function updateDots() {
   });
 }
 
-// ========== Account Copy & Toggle ==========
-function toggleAccount(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle('show');
+// ========== Guestbook ==========
+function getGuestMessage() {
+  var name = document.getElementById('guest-name').value.trim();
+  var message = document.getElementById('guest-message').value.trim();
+
+  if (!name) {
+    alert('이름을 입력해주세요.');
+    return null;
+  }
+  if (!message) {
+    alert('메시지를 입력해주세요.');
+    return null;
+  }
+
+  return name + '님의 축하 메시지:\n\n' + message + '\n\n- 아인이의 첫돌 초대장에서 -';
 }
 
-function copyAccount(name, bank, account) {
-  const textarea = document.createElement('textarea');
-  textarea.value = bank + ' ' + account;
-  textarea.setAttribute('readonly', '');
-  textarea.style.position = 'absolute';
-  textarea.style.left = '-9999px';
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand('copy');
-  document.body.removeChild(textarea);
-  alert(name + '의 계좌번호가 복사되었습니다.\n' + bank + ' ' + account);
+function sendMessage() {
+  var text = getGuestMessage();
+  if (!text) return;
+  var encoded = encodeURIComponent(text);
+  window.open('https://sharer.kakao.com/talk/friends/picker/shorturl?url=&text=' + encoded);
 }
 
-function openKakaoPay() {
-  window.open('https://qr.kakaopay.com/Ej8rpd61Z');
+function sendSMS() {
+  var text = getGuestMessage();
+  if (!text) return;
+  var encoded = encodeURIComponent(text);
+  window.location.href = 'sms:?body=' + encoded;
+}
+
+function initGuestbook() {
+  var textarea = document.getElementById('guest-message');
+  var counter = document.getElementById('char-count');
+  if (textarea && counter) {
+    textarea.addEventListener('input', function() {
+      counter.textContent = textarea.value.length;
+    });
+  }
 }
 
 // ========== Map Navigation ==========
@@ -201,11 +219,11 @@ function updateDday() {
   var diff = Math.ceil((birthday - today) / (1000 * 60 * 60 * 24));
 
   if (diff > 0) {
-    el.textContent = '아인이의 첫돌까지 ' + diff + '일';
+    el.innerHTML = '아인이의 첫돌까지 <span class="dday-num">' + diff + '</span>일';
   } else if (diff === 0) {
-    el.textContent = '오늘은 아인이의 첫돌입니다!';
+    el.innerHTML = '오늘은 아인이의 <span class="dday-num">첫돌</span>입니다!';
   } else {
-    el.textContent = '아인이의 첫돌 +' + Math.abs(diff) + '일';
+    el.innerHTML = '아인이의 첫돌 <span class="dday-num">+' + Math.abs(diff) + '</span>일';
   }
 }
 
@@ -313,4 +331,5 @@ document.addEventListener('DOMContentLoaded', function() {
   updateDday();
   initMusic();
   initLightbox();
+  initGuestbook();
 });
