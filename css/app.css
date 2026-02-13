@@ -746,6 +746,86 @@ a {
   word-break: keep-all;
 }
 
+.message-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.msg-action-btn {
+  background: none;
+  border: none;
+  font-family: 'Cafe24Oneprettynight', cursive;
+  font-size: 0.78em;
+  color: #bbb;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.msg-action-btn:active {
+  color: #888;
+}
+
+.msg-action-btn.save {
+  color: #295238;
+}
+
+.msg-action-btn.cancel {
+  color: #c0392b;
+}
+
+.msg-action-divider {
+  color: #ddd;
+  font-size: 0.75em;
+}
+
+.edit-textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #c0b0a0;
+  border-radius: 8px;
+  font-family: 'Cafe24Oneprettynight', cursive;
+  font-size: 0.92em;
+  color: #555;
+  background: #fff;
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+}
+
+/* ========== Guestbook Pagination ========== */
+.guestbook-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 15px;
+}
+
+.page-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e0d8d0;
+  border-radius: 8px;
+  background: #fdfbf8;
+  font-family: 'Cafe24Oneprettynight', cursive;
+  font-size: 0.9em;
+  color: #888;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background: #295238;
+  color: #fff;
+  border-color: #295238;
+}
+
+.page-btn:active {
+  opacity: 0.7;
+}
+
 /* ========== Button Component ========== */
 .button-container {
   display: flex;

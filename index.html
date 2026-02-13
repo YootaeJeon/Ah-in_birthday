@@ -213,6 +213,7 @@
 
     <div class="guestbook-form">
       <input type="text" id="guest-name" class="guestbook-input" placeholder="이름" maxlength="10">
+      <input type="password" id="guest-password" class="guestbook-input" placeholder="비밀번호 (수정/삭제용)" maxlength="20">
       <textarea id="guest-message" class="guestbook-textarea" placeholder="아인아, 첫돌 축하해!" maxlength="200"></textarea>
       <div class="guestbook-char"><span id="char-count">0</span>/200</div>
       <button class="guestbook-btn submit" onclick="submitGuestMessage()">축하 남기기</button>
@@ -221,6 +222,7 @@
     <div id="guestbook-messages" class="guestbook-messages">
       <p class="guestbook-loading">메시지를 불러오는 중...</p>
     </div>
+    <div id="guestbook-pagination" class="guestbook-pagination"></div>
   </section>
 
   <!-- ========== Divider ========== -->

@@ -109,6 +109,10 @@ function updateDots() {
 var SUPABASE_URL = 'https://imilvjpgejjknyoaxorp.supabase.co';
 var SUPABASE_ANON_KEY = 'sb_publishable_kIfSnTJYMWRJ0ujtW4MdZg_gAIHlkbO';
 var supabaseClient = null;
+var MESSAGES_PER_PAGE = 5;
+var currentPage = 0;
+var totalMessages = 0;
+var editState = { id: null, password: null };
 
 function initSupabase() {
   if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
@@ -116,18 +120,24 @@ function initSupabase() {
   }
 }
 
+function hashPassword(password) {
+  var encoder = new TextEncoder();
+  var data = encoder.encode(password);
+  return crypto.subtle.digest('SHA-256', data).then(function(buf) {
+    return Array.from(new Uint8Array(buf)).map(function(b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  });
+}
+
 function submitGuestMessage() {
   var name = document.getElementById('guest-name').value.trim();
+  var password = document.getElementById('guest-password').value.trim();
   var message = document.getElementById('guest-message').value.trim();
 
-  if (!name) {
-    alert('이름을 입력해주세요.');
-    return;
-  }
-  if (!message) {
-    alert('메시지를 입력해주세요.');
-    return;
-  }
+  if (!name) { alert('이름을 입력해주세요.'); return; }
+  if (!password) { alert('비밀번호를 입력해주세요.'); return; }
+  if (!message) { alert('메시지를 입력해주세요.'); return; }
 
   if (!supabaseClient) {
     alert('방명록 서비스에 연결할 수 없습니다.');
@@ -138,34 +148,46 @@ function submitGuestMessage() {
   btn.disabled = true;
   btn.textContent = '보내는 중...';
 
-  supabaseClient.from('guestbook').insert([{
-    name: name,
-    message: message
-  }]).then(function(result) {
-    btn.disabled = false;
-    btn.textContent = '축하 남기기';
+  hashPassword(password).then(function(hashed) {
+    supabaseClient.from('guestbook').insert([{
+      name: name,
+      message: message,
+      password: hashed
+    }]).then(function(result) {
+      btn.disabled = false;
+      btn.textContent = '축하 남기기';
 
-    if (result.error) {
-      alert('메시지 저장에 실패했습니다. 다시 시도해주세요.');
-      return;
-    }
+      if (result.error) {
+        alert('메시지 저장에 실패했습니다. 다시 시도해주세요.');
+        return;
+      }
 
-    document.getElementById('guest-name').value = '';
-    document.getElementById('guest-message').value = '';
-    document.getElementById('char-count').textContent = '0';
-    loadMessages();
+      document.getElementById('guest-name').value = '';
+      document.getElementById('guest-password').value = '';
+      document.getElementById('guest-message').value = '';
+      document.getElementById('char-count').textContent = '0';
+      loadMessages(0);
+    });
   });
 }
 
-function loadMessages() {
+function loadMessages(page) {
   if (!supabaseClient) return;
+  if (page === undefined) page = 0;
+  currentPage = page;
+
+  var from = page * MESSAGES_PER_PAGE;
+  var to = from + MESSAGES_PER_PAGE - 1;
 
   supabaseClient.from('guestbook')
-    .select('*')
+    .select('id, name, message, created_at', { count: 'exact' })
     .order('created_at', { ascending: false })
+    .range(from, to)
     .then(function(result) {
       if (result.error) return;
+      totalMessages = result.count;
       renderMessages(result.data);
+      renderPagination();
     });
 }
 
@@ -185,16 +207,137 @@ function renderMessages(messages) {
       String(date.getMonth() + 1).padStart(2, '0') + '.' +
       String(date.getDate()).padStart(2, '0');
 
-    html += '<div class="message-card">' +
+    html += '<div class="message-card" data-id="' + msg.id + '">' +
       '<div class="message-header">' +
         '<span class="message-name">' + escapeHtml(msg.name) + '</span>' +
         '<span class="message-date">' + dateStr + '</span>' +
       '</div>' +
       '<p class="message-text">' + escapeHtml(msg.message) + '</p>' +
+      '<div class="message-actions">' +
+        '<button class="msg-action-btn" onclick="editMessage(' + msg.id + ')">수정</button>' +
+        '<span class="msg-action-divider">|</span>' +
+        '<button class="msg-action-btn" onclick="deleteMessage(' + msg.id + ')">삭제</button>' +
+      '</div>' +
     '</div>';
   });
 
   container.innerHTML = html;
+}
+
+function renderPagination() {
+  var container = document.getElementById('guestbook-pagination');
+  if (!container) return;
+
+  var totalPages = Math.ceil(totalMessages / MESSAGES_PER_PAGE);
+  if (totalPages <= 1) {
+    container.innerHTML = '';
+    return;
+  }
+
+  var html = '';
+  for (var i = 0; i < totalPages; i++) {
+    var activeClass = i === currentPage ? ' active' : '';
+    html += '<button class="page-btn' + activeClass + '" onclick="loadMessages(' + i + ')">' + (i + 1) + '</button>';
+  }
+  container.innerHTML = html;
+}
+
+function deleteMessage(id) {
+  var password = prompt('삭제하려면 비밀번호를 입력하세요.');
+  if (!password) return;
+
+  hashPassword(password).then(function(hashed) {
+    supabaseClient.from('guestbook')
+      .delete()
+      .eq('id', id)
+      .eq('password', hashed)
+      .select()
+      .then(function(result) {
+        if (result.error) {
+          alert('삭제에 실패했습니다.');
+          return;
+        }
+        if (!result.data || result.data.length === 0) {
+          alert('비밀번호가 일치하지 않습니다.');
+          return;
+        }
+        loadMessages(currentPage);
+      });
+  });
+}
+
+function editMessage(id) {
+  var password = prompt('수정하려면 비밀번호를 입력하세요.');
+  if (!password) return;
+
+  hashPassword(password).then(function(hashed) {
+    supabaseClient.from('guestbook')
+      .select('id, name, message')
+      .eq('id', id)
+      .eq('password', hashed)
+      .then(function(result) {
+        if (result.error || !result.data || result.data.length === 0) {
+          alert('비밀번호가 일치하지 않습니다.');
+          return;
+        }
+        editState.id = id;
+        editState.password = hashed;
+        showEditForm(id, result.data[0]);
+      });
+  });
+}
+
+function showEditForm(id, data) {
+  var card = document.querySelector('.message-card[data-id="' + id + '"]');
+  if (!card) return;
+
+  var textEl = card.querySelector('.message-text');
+  var actionsEl = card.querySelector('.message-actions');
+
+  var textarea = document.createElement('textarea');
+  textarea.className = 'edit-textarea';
+  textarea.id = 'edit-text-' + id;
+  textarea.value = data.message;
+  textarea.maxLength = 200;
+  textEl.replaceWith(textarea);
+
+  actionsEl.innerHTML =
+    '<button class="msg-action-btn save" onclick="saveEdit()">저장</button>' +
+    '<span class="msg-action-divider">|</span>' +
+    '<button class="msg-action-btn cancel" onclick="cancelEdit()">취소</button>';
+}
+
+function saveEdit() {
+  if (!editState.id) return;
+
+  var textarea = document.getElementById('edit-text-' + editState.id);
+  var newMessage = textarea.value.trim();
+
+  if (!newMessage) {
+    alert('메시지를 입력해주세요.');
+    return;
+  }
+
+  supabaseClient.from('guestbook')
+    .update({ message: newMessage })
+    .eq('id', editState.id)
+    .eq('password', editState.password)
+    .select()
+    .then(function(result) {
+      editState.id = null;
+      editState.password = null;
+      if (result.error) {
+        alert('수정에 실패했습니다.');
+        return;
+      }
+      loadMessages(currentPage);
+    });
+}
+
+function cancelEdit() {
+  editState.id = null;
+  editState.password = null;
+  loadMessages(currentPage);
 }
 
 function escapeHtml(text) {
@@ -213,7 +356,7 @@ function initGuestbook() {
   }
 
   initSupabase();
-  loadMessages();
+  loadMessages(0);
 }
 
 // ========== Map Navigation ==========
