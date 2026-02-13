@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta property="og:title" content="아인이의 돌잔치에 초대합니다">
+  <meta property="og:description" content="2026년 2월 15일 일요일 오후 12시 | 연 그리다">
+  <meta property="og:image" content="https://raw.githubusercontent.com/YootaeJeon/Ah-in_birthday/main/img/ah-in%20intro.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="400">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yootaejeon.github.io/Ah-in_birthday/index.html">
+  <title>💕아인이의 돌잔치에 초대합니다.</title>
+  <link rel="stylesheet" href="./css/app.css">
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8bd60f2a692d1bf9b4b879b8299f6f46&autoload=false"></script>
+</head>
+<body>
+
+  <!-- ========== Flower Rain ========== -->
+  <div id="flower-rain"></div>
+
+  <!-- ========== Intro Section ========== -->
+  <section class="intro-movie">
+    <div class="image">
+      <img src="./img/ah-in intro.jpg" alt="아인이의 첫돌">
+    </div>
+  </section>
+
+  <!-- ========== Greeting Section ========== -->
+  <section class="live" data-animate>
+    <img class="hands" src="./img/hands.png" alt="">
+    <div>
+      <p class="header">
+        "사랑하는 아인이의 첫 생일잔치입니다."
+      </p>
+      <p>
+        열달의 설렘과 열두달의 행복으로<br>
+        무럭무럭 자란 아인이가<br>
+        첫 번째 생일을 맞이했습니다.<br><br>
+        누구보다 예쁘고 씩씩하게 자랄<br>
+        아인이의 첫 생일을 축하하며<br>
+        바위 처럼 굳세고 꽃처럼 아름답고<br>
+        별처럼 빛나는 아이가 될 수 있도록<br>
+        축하의 자리에 함께 해주시고 많이 축복해주세요.<br><br>
+        바쁘시더라도 사랑하는 우리 아이가 건강하게 자라도록<br>
+        참석하여 축하해주시면 정말 감사하고 큰 기쁨이 되겠습니다.
+      </p>
+      <h2 class="h2">엄마 신지희, 아빠 전유태 드림👪</h2>
+    </div>
+  </section>
+
+  <!-- ========== Divider ========== -->
+  <div class="divider"><img src="./img/divider.png" alt=""></div>
+
+  <!-- ========== Calendar Section ========== -->
+  <section class="calendar-section" data-animate>
+    <h3>2026. 02. 15</h3>
+    <p class="calendar-datetime">일요일 오후 12:00</p>
+    <table class="calendar-table">
+      <thead>
+        <tr>
+          <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+        </tr>
+        <tr>
+          <td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td>
+        </tr>
+        <tr>
+          <td class="today">15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td>
+        </tr>
+        <tr>
+          <td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="calendar-dday" id="dday-counter"></p>
+  </section>
+
+  <!-- ========== Divider ========== -->
+  <div class="divider"><img src="./img/divider.png" alt=""></div>
+
+  <!-- ========== Gallery Section ========== -->
+  <section class="celebrate" data-animate>
+    <img class="goose" src="./img/goose.png" alt="">
+    <h3>아인이의 행복한 순간들</h3>
+    <p class="sub">Our family's happiest moment</p>
+
+    <div class="gallery-container">
+      <div class="gallery-images">
+        <img src="./gallery/ah-in 1.jpg" alt="아인 1">
+        <img src="./gallery/ah-in 2.jpg" alt="아인 2">
+        <img src="./gallery/ah-in 3.jpg" alt="아인 3">
+        <img src="./gallery/ah-in 4.jpg" alt="아인 4">
+        <img src="./gallery/ah-in 5.jpg" alt="아인 5">
+        <img src="./gallery/ah-in 6.jpg" alt="아인 6">
+        <img src="./gallery/ah-in 7.jpg" alt="아인 7">
+        <img src="./gallery/ah-in 8.jpg" alt="아인 8">
+      </div>
+    </div>
+
+    <div class="gallery-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <div class="gallery-nav">
+      <button onclick="galleryPrev()">&#10094;</button>
+      <button onclick="galleryNext()">&#10095;</button>
+    </div>
+  </section>
+
+  <!-- ========== Divider ========== -->
+  <div class="divider"><img src="./img/divider.png" alt=""></div>
+
+  <!-- ========== Map Section ========== -->
+  <section class="map-section" data-animate>
+    <h3>오시는 길</h3>
+    <p class="venue-name">연 그리다</p>
+    <p class="venue-address">
+      경기 부천시 원미구 부일로 223<br>
+      투나빌딩 B1층
+    </p>
+
+    <div class="map-container">
+      <div id="kakao-map" style="width:100%;height:100%;"></div>
+    </div>
+
+    <div class="map-buttons">
+      <a class="map-btn" href="javascript:void(0)" onclick="openNaverMap()">
+        <img src="./img/navermap.png" alt="네이버맵"> 네이버 지도
+      </a>
+      <a class="map-btn" href="javascript:void(0)" onclick="openKakaoMap()">
+        카카오맵
+      </a>
+      <a class="map-btn" href="javascript:void(0)" onclick="openTmap()">
+        T-map
+      </a>
+      <a class="map-btn" href="javascript:void(0)" onclick="openKakaoTaxi()">
+        카카오 택시
+      </a>
+    </div>
+
+    <div class="transport-info">
+      <h4>🚇 지하철</h4>
+      <p>7호선 상동역 2번 출구에서 도보 5분</p>
+      <h4>🚗 자가용</h4>
+      <p>
+        네비게이션 "연 그리다" 또는<br>
+        "부천시 원미구 부일로 223" 검색<br>
+        투나빌딩 지하주차장 이용 가능
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== Divider ========== -->
+  <div class="divider"><img src="./img/divider.png" alt=""></div>
+
+  <!-- ========== Funding Section ========== -->
+  <section class="funding" data-animate>
+    <img class="flower-icon" src="./img/flower.png" alt="">
+    <h3>축하의 마음 전하는 방법</h3>
+    <p class="description">
+      참석이 어려우신 분들을 위해<br>
+      축의금을 전달할 수 있는<br>
+      계좌번호를 안내드립니다.
+    </p>
+
+    <button class="funding-btn" onclick="openKakaoPay()">
+      카카오페이로 축의금 전달하기
+    </button>
+
+    <div class="account-section">
+      <button class="account-toggle" onclick="toggleAccount('account-dad')">
+        🏦 아빠 전유태 계좌번호 보기
+      </button>
+      <div class="account-detail" id="account-dad">
+        <p class="bank-name">신한은행</p>
+        <p class="account-number">110362283345</p>
+        <button class="copy-btn" onclick="copyAccount('아빠', '신한은행', '110362283345')">복사하기</button>
+      </div>
+
+      <button class="account-toggle" onclick="toggleAccount('account-mom')">
+        🏦 엄마 신지희 계좌번호 보기
+      </button>
+      <div class="account-detail" id="account-mom">
+        <p class="bank-name">우리은행</p>
+        <p class="account-number">1002550434888</p>
+        <button class="copy-btn" onclick="copyAccount('엄마', '우리은행', '1002550434888')">복사하기</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Divider ========== -->
+  <div class="divider"><img src="./img/divider.png" alt=""></div>
+
+  <!-- ========== Credit Section ========== -->
+  <section class="credit" data-animate>
+    <div class="description_head">Create</div>
+    <h2 class="h2">홈페이지 만든 사람</h2>
+    <div class="profile-list">
+      <div class="profile">
+        <a target="_blank" href="https://www.instagram.com/luv.each.other_">
+          <div class="thumbnail susan"></div>
+          <div class="name">엄마 신지희</div>
+          <div class="role">디자인</div>
+        </a>
+      </div>
+      <div class="profile">
+        <a target="_blank" href="https://www.instagram.com/jeonstory.graphy/">
+          <div class="thumbnail anna"></div>
+          <div class="name">아빠 전유태</div>
+          <div class="role">웹 개발</div>
+        </a>
+      </div>
+    </div>
+    <p class="description">
+      엄마 아빠가 직접 만든 홈페이지라 서툴지만<br>
+      뜻 깊은 아인이의 초대장을 끝까지 봐주셔서 감사합니다.
+    </p>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <div class="footer">
+    <p>아인이의 첫돌 초대장 💕</p>
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
