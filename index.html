@@ -94,8 +94,8 @@
   <!-- ========== Gallery Section ========== -->
   <section class="celebrate" data-animate>
     <img class="goose" src="./img/goose.png" alt="">
-    <p class="gallery-label">Photo Gallery</p>
     <h3>아인이의 행복한 순간들</h3>
+    <p class="gallery-label">Our family's happiest moment</p>
 
     <div class="gallery-container">
       <div class="gallery-track">
@@ -252,6 +252,17 @@
   <!-- ========== Footer ========== -->
   <div class="footer">
     <p>아인이의 첫돌 초대장 💕</p>
+  </div>
+
+  <!-- ========== Lightbox Modal ========== -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-prev" onclick="lightboxPrev(event)">&#10094;</button>
+    <button class="lightbox-next" onclick="lightboxNext(event)">&#10095;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+    </div>
+    <div class="lightbox-counter"><span id="lightbox-index">1</span> / 8</div>
   </div>
 
   <script src="./js/app.js"></script>

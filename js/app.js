@@ -57,10 +57,14 @@ function initGallery() {
     }
   });
 
-  // 클릭으로도 이동
+  // 클릭: active면 라이트박스, 아니면 해당 슬라이드로 이동
   gallery.slides.forEach(function(slide, index) {
     slide.addEventListener('click', function() {
-      goToSlide(index);
+      if (slide.classList.contains('active')) {
+        openLightbox(index);
+      } else {
+        goToSlide(index);
+      }
     });
   });
 
@@ -246,6 +250,60 @@ function toggleMusic() {
   }
 }
 
+// ========== Lightbox ==========
+var lightboxIndex = 0;
+var lightboxImages = [
+  './gallery/ah-in 1.jpg',
+  './gallery/ah-in 2.jpg',
+  './gallery/ah-in 3.jpg',
+  './gallery/ah-in 4.jpg',
+  './gallery/ah-in 5.jpg',
+  './gallery/ah-in 6.jpg',
+  './gallery/ah-in 7.jpg',
+  './gallery/ah-in 8.jpg'
+];
+
+function openLightbox(index) {
+  lightboxIndex = index;
+  var lb = document.getElementById('lightbox');
+  var img = document.getElementById('lightbox-img');
+  img.src = lightboxImages[index];
+  document.getElementById('lightbox-index').textContent = index + 1;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function lightboxPrev(e) {
+  if (e) e.stopPropagation();
+  if (lightboxIndex > 0) openLightbox(lightboxIndex - 1);
+}
+
+function lightboxNext(e) {
+  if (e) e.stopPropagation();
+  if (lightboxIndex < lightboxImages.length - 1) openLightbox(lightboxIndex + 1);
+}
+
+function initLightbox() {
+  var lb = document.getElementById('lightbox');
+  var startX = 0;
+  lb.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].pageX;
+  });
+  lb.addEventListener('touchend', function(e) {
+    var diff = startX - e.changedTouches[0].pageX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) lightboxNext();
+      else lightboxPrev();
+    }
+  });
+}
+
 // ========== Initialize ==========
 document.addEventListener('DOMContentLoaded', function() {
   createFlowerLeaves();
@@ -254,4 +312,5 @@ document.addEventListener('DOMContentLoaded', function() {
   initKakaoMap();
   updateDday();
   initMusic();
+  initLightbox();
 });
