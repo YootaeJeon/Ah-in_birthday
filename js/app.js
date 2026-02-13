@@ -105,35 +105,102 @@ function updateDots() {
   });
 }
 
-// ========== Guestbook ==========
-function getGuestMessage() {
+// ========== Supabase Guestbook ==========
+var SUPABASE_URL = 'https://imilvjpgejjknyoaxorp.supabase.co';
+var SUPABASE_ANON_KEY = 'sb_publishable_kIfSnTJYMWRJ0ujtW4MdZg_gAIHlkbO';
+var supabase = null;
+
+function initSupabase() {
+  if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+}
+
+function submitGuestMessage() {
   var name = document.getElementById('guest-name').value.trim();
   var message = document.getElementById('guest-message').value.trim();
 
   if (!name) {
     alert('이름을 입력해주세요.');
-    return null;
+    return;
   }
   if (!message) {
     alert('메시지를 입력해주세요.');
-    return null;
+    return;
   }
 
-  return name + '님의 축하 메시지:\n\n' + message + '\n\n- 아인이의 첫돌 초대장에서 -';
+  if (!supabase) {
+    alert('방명록 서비스에 연결할 수 없습니다.');
+    return;
+  }
+
+  var btn = document.querySelector('.guestbook-btn.submit');
+  btn.disabled = true;
+  btn.textContent = '보내는 중...';
+
+  supabase.from('guestbook').insert([{
+    name: name,
+    message: message
+  }]).then(function(result) {
+    btn.disabled = false;
+    btn.textContent = '축하 남기기';
+
+    if (result.error) {
+      alert('메시지 저장에 실패했습니다. 다시 시도해주세요.');
+      return;
+    }
+
+    document.getElementById('guest-name').value = '';
+    document.getElementById('guest-message').value = '';
+    document.getElementById('char-count').textContent = '0';
+    loadMessages();
+  });
 }
 
-function sendMessage() {
-  var text = getGuestMessage();
-  if (!text) return;
-  var encoded = encodeURIComponent(text);
-  window.open('https://sharer.kakao.com/talk/friends/picker/shorturl?url=&text=' + encoded);
+function loadMessages() {
+  if (!supabase) return;
+
+  supabase.from('guestbook')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .then(function(result) {
+      if (result.error) return;
+      renderMessages(result.data);
+    });
 }
 
-function sendSMS() {
-  var text = getGuestMessage();
-  if (!text) return;
-  var encoded = encodeURIComponent(text);
-  window.location.href = 'sms:?body=' + encoded;
+function renderMessages(messages) {
+  var container = document.getElementById('guestbook-messages');
+  if (!container) return;
+
+  if (!messages || messages.length === 0) {
+    container.innerHTML = '<p class="guestbook-empty">아직 메시지가 없어요.<br>첫 번째 축하 메시지를 남겨주세요!</p>';
+    return;
+  }
+
+  var html = '';
+  messages.forEach(function(msg) {
+    var date = new Date(msg.created_at);
+    var dateStr = date.getFullYear() + '.' +
+      String(date.getMonth() + 1).padStart(2, '0') + '.' +
+      String(date.getDate()).padStart(2, '0');
+
+    html += '<div class="message-card">' +
+      '<div class="message-header">' +
+        '<span class="message-name">' + escapeHtml(msg.name) + '</span>' +
+        '<span class="message-date">' + dateStr + '</span>' +
+      '</div>' +
+      '<p class="message-text">' + escapeHtml(msg.message) + '</p>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function escapeHtml(text) {
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 function initGuestbook() {
@@ -144,6 +211,9 @@ function initGuestbook() {
       counter.textContent = textarea.value.length;
     });
   }
+
+  initSupabase();
+  loadMessages();
 }
 
 // ========== Map Navigation ==========

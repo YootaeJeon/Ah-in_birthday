@@ -16,6 +16,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
   <link rel="stylesheet" href="./css/app.css">
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8bd60f2a692d1bf9b4b879b8299f6f46&autoload=false"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -202,6 +203,7 @@
 
   <!-- ========== Guestbook Section ========== -->
   <section class="guestbook" data-animate>
+    <img class="guestbook-icon" src="./img/bunny.png" alt="">
     <p class="guestbook-notice">축의금은 정중히 사양합니다.</p>
     <h3>아인이에게 한마디</h3>
     <p class="description">
@@ -213,8 +215,11 @@
       <input type="text" id="guest-name" class="guestbook-input" placeholder="이름" maxlength="10">
       <textarea id="guest-message" class="guestbook-textarea" placeholder="아인아, 첫돌 축하해!" maxlength="200"></textarea>
       <div class="guestbook-char"><span id="char-count">0</span>/200</div>
-      <button class="guestbook-btn" onclick="sendMessage()">카카오톡으로 보내기</button>
-      <button class="guestbook-btn sms" onclick="sendSMS()">문자로 보내기</button>
+      <button class="guestbook-btn submit" onclick="submitGuestMessage()">축하 남기기</button>
+    </div>
+
+    <div id="guestbook-messages" class="guestbook-messages">
+      <p class="guestbook-loading">메시지를 불러오는 중...</p>
     </div>
   </section>
 
