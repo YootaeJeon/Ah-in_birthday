@@ -1,0 +1,9 @@
+{
+  "name": "ah-in-birthday",
+  "version": "1.0.0",
+  "description": "아인이의 모바일 돌잔치 초대장",
+  "scripts": {
+    "dev": "npx live-server --port=8080 --open=/index.html",
+    "start": "npx live-server --port=8080 --open=/index.html"
+  }
+}

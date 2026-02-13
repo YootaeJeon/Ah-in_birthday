@@ -28,31 +28,58 @@ function createFlowerLeaves() {
 }
 
 // ========== Gallery Carousel ==========
-const galleryState = {
+var gallery = {
   curPos: 0,
-  position: 0,
   startX: 0,
-  endX: 0,
-  imageWidth: 0,
+  slides: null,
+  track: null,
+  slideWidth: 166, // 150px + 16px margin
   totalImages: 8
 };
 
 function initGallery() {
-  const imagesEl = document.querySelector('.gallery-images');
-  if (!imagesEl) return;
+  gallery.track = document.querySelector('.gallery-track');
+  gallery.slides = document.querySelectorAll('.gallery-slide');
+  if (!gallery.track || !gallery.slides.length) return;
 
-  galleryState.imageWidth = imagesEl.offsetWidth;
-
-  imagesEl.addEventListener('touchstart', function(e) {
-    galleryState.startX = e.touches[0].pageX;
+  gallery.track.addEventListener('touchstart', function(e) {
+    gallery.startX = e.touches[0].pageX;
   });
 
-  imagesEl.addEventListener('touchend', function(e) {
-    galleryState.endX = e.changedTouches[0].pageX;
-    if (galleryState.startX > galleryState.endX) {
-      galleryNext();
-    } else {
-      galleryPrev();
+  gallery.track.addEventListener('touchend', function(e) {
+    var diff = gallery.startX - e.changedTouches[0].pageX;
+    if (Math.abs(diff) > 30) {
+      if (diff > 0) {
+        galleryNext();
+      } else {
+        galleryPrev();
+      }
+    }
+  });
+
+  // 클릭으로도 이동
+  gallery.slides.forEach(function(slide, index) {
+    slide.addEventListener('click', function() {
+      goToSlide(index);
+    });
+  });
+
+  goToSlide(0);
+}
+
+function goToSlide(index) {
+  if (index < 0 || index >= gallery.totalImages) return;
+  gallery.curPos = index;
+
+  var offset = -(index * gallery.slideWidth);
+  gallery.track.style.transform = 'translateX(' + offset + 'px)';
+
+  gallery.slides.forEach(function(slide, i) {
+    slide.classList.remove('active', 'adjacent');
+    if (i === index) {
+      slide.classList.add('active');
+    } else if (Math.abs(i - index) === 1) {
+      slide.classList.add('adjacent');
     }
   });
 
@@ -60,27 +87,17 @@ function initGallery() {
 }
 
 function galleryPrev() {
-  if (galleryState.curPos > 0) {
-    galleryState.position += galleryState.imageWidth;
-    document.querySelector('.gallery-images').style.transform = 'translateX(' + galleryState.position + 'px)';
-    galleryState.curPos--;
-    updateDots();
-  }
+  if (gallery.curPos > 0) goToSlide(gallery.curPos - 1);
 }
 
 function galleryNext() {
-  if (galleryState.curPos < galleryState.totalImages - 1) {
-    galleryState.position -= galleryState.imageWidth;
-    document.querySelector('.gallery-images').style.transform = 'translateX(' + galleryState.position + 'px)';
-    galleryState.curPos++;
-    updateDots();
-  }
+  if (gallery.curPos < gallery.totalImages - 1) goToSlide(gallery.curPos + 1);
 }
 
 function updateDots() {
-  const dots = document.querySelectorAll('.gallery-dots .dot');
+  var dots = document.querySelectorAll('.gallery-dots .dot');
   dots.forEach(function(dot, index) {
-    dot.classList.toggle('active', index === galleryState.curPos);
+    dot.classList.toggle('active', index === gallery.curPos);
   });
 }
 

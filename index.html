@@ -22,7 +22,7 @@
   <audio id="bg-music" loop preload="auto">
     <source src="./MyLight.mp3" type="audio/mp3">
   </audio>
-  <div id="music-btn" class="music-btn" onclick="toggleMusic()">🎵</div>
+  <div id="music-btn" class="music-btn" onclick="toggleMusic()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></div>
 
   <!-- ========== Flower Rain ========== -->
   <div id="flower-rain"></div>
@@ -94,19 +94,19 @@
   <!-- ========== Gallery Section ========== -->
   <section class="celebrate" data-animate>
     <img class="goose" src="./img/goose.png" alt="">
+    <p class="gallery-label">Photo Gallery</p>
     <h3>아인이의 행복한 순간들</h3>
-    <p class="sub">Our family's happiest moment</p>
 
     <div class="gallery-container">
-      <div class="gallery-images">
-        <img src="./gallery/ah-in 1.jpg" alt="아인 1">
-        <img src="./gallery/ah-in 2.jpg" alt="아인 2">
-        <img src="./gallery/ah-in 3.jpg" alt="아인 3">
-        <img src="./gallery/ah-in 4.jpg" alt="아인 4">
-        <img src="./gallery/ah-in 5.jpg" alt="아인 5">
-        <img src="./gallery/ah-in 6.jpg" alt="아인 6">
-        <img src="./gallery/ah-in 7.jpg" alt="아인 7">
-        <img src="./gallery/ah-in 8.jpg" alt="아인 8">
+      <div class="gallery-track">
+        <div class="gallery-slide"><div class="arch-frame"><img src="./gallery/ah-in 1.jpg" alt="아인 1"></div></div>
+        <div class="gallery-slide"><div class="arch-frame"><img src="./gallery/ah-in 2.jpg" alt="아인 2"></div></div>
+        <div class="gallery-slide"><div class="arch-frame"><img src="./gallery/ah-in 3.jpg" alt="아인 3"></div></div>
+        <div class="gallery-slide"><div class="arch-frame"><img src="./gallery/ah-in 4.jpg" alt="아인 4"></div></div>
+        <div class="gallery-slide"><div class="arch-frame"><img src="./gallery/ah-in 5.jpg" alt="아인 5"></div></div>
+        <div class="gallery-slide"><div class="arch-frame"><img src="./gallery/ah-in 6.jpg" alt="아인 6"></div></div>
+        <div class="gallery-slide"><div class="arch-frame"><img src="./gallery/ah-in 7.jpg" alt="아인 7"></div></div>
+        <div class="gallery-slide"><div class="arch-frame"><img src="./gallery/ah-in 8.jpg" alt="아인 8"></div></div>
       </div>
     </div>
 
@@ -144,27 +144,27 @@
     </div>
 
     <div class="map-buttons">
+      <a class="map-btn" href="javascript:void(0)" onclick="openTmap()">
+        <img src="./img/tmap.png" alt="T-map"> T-map
+      </a>
+      <a class="map-btn" href="javascript:void(0)" onclick="openKakaoTaxi()">
+        <img src="./img/kakaot.png" alt="카카오택시"> 카카오 택시
+      </a>
       <a class="map-btn" href="javascript:void(0)" onclick="openNaverMap()">
         <img src="./img/navermap.png" alt="네이버맵"> 네이버 지도
       </a>
       <a class="map-btn" href="javascript:void(0)" onclick="openKakaoMap()">
-        카카오맵
-      </a>
-      <a class="map-btn" href="javascript:void(0)" onclick="openTmap()">
-        T-map
-      </a>
-      <a class="map-btn" href="javascript:void(0)" onclick="openKakaoTaxi()">
-        카카오 택시
+        <img src="./img/kakaomap.png" alt="카카오맵"> 카카오맵
       </a>
     </div>
 
     <div class="transport-info">
       <h4>🚇 지하철</h4>
-      <p>7호선 상동역 2번 출구에서 도보 5분</p>
+      <p>1호선 송내역 2번출구 도보 3분</p>
       <h4>🚗 자가용</h4>
       <p>
         네비게이션 "연 그리다" 또는<br>
-        "부천시 원미구 부일로 223" 검색<br>
+        "부천시 원미구 부일로 223 투나빌딩" 검색<br>
         투나빌딩 지하주차장 이용 가능
       </p>
     </div>
