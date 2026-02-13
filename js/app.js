@@ -108,11 +108,11 @@ function updateDots() {
 // ========== Supabase Guestbook ==========
 var SUPABASE_URL = 'https://imilvjpgejjknyoaxorp.supabase.co';
 var SUPABASE_ANON_KEY = 'sb_publishable_kIfSnTJYMWRJ0ujtW4MdZg_gAIHlkbO';
-var supabase = null;
+var supabaseClient = null;
 
 function initSupabase() {
   if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
 }
 
@@ -129,7 +129,7 @@ function submitGuestMessage() {
     return;
   }
 
-  if (!supabase) {
+  if (!supabaseClient) {
     alert('방명록 서비스에 연결할 수 없습니다.');
     return;
   }
@@ -138,7 +138,7 @@ function submitGuestMessage() {
   btn.disabled = true;
   btn.textContent = '보내는 중...';
 
-  supabase.from('guestbook').insert([{
+  supabaseClient.from('guestbook').insert([{
     name: name,
     message: message
   }]).then(function(result) {
@@ -158,9 +158,9 @@ function submitGuestMessage() {
 }
 
 function loadMessages() {
-  if (!supabase) return;
+  if (!supabaseClient) return;
 
-  supabase.from('guestbook')
+  supabaseClient.from('guestbook')
     .select('*')
     .order('created_at', { ascending: false })
     .then(function(result) {
